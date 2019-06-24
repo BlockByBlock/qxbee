@@ -8,12 +8,16 @@ win32:CONFIG += static
 
 SOURCES += \
         src/qxbee.cpp \
-        src/xbeegenericpacket.cpp
+        src/xbeeGenericPacket.cpp \
+        src/xbeeReceivePacket.cpp \
+        src/xbeeTransmitPacket.cpp
 
 HEADERS += \
         include/qxbee.h \
         include/qxbee_global.h \
-        include/xbeegenericpacket.h
+        include/xbeeTransmitPacket.h \
+        include/xbeeGenericPacket.h \
+        include/xbeeReceivePacket.h
 
 #unix {
 #    target.path = /usr/lib
