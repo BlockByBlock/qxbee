@@ -7,17 +7,19 @@ unix:CONFIG += static
 win32:CONFIG += static
 
 SOURCES += \
-        src/qxbee.cpp \
-        src/xbeeGenericPacket.cpp \
-        src/xbeeReceivePacket.cpp \
-        src/xbeeTransmitPacket.cpp
+    src/QXbee.cpp \
+    src/ReceiveFrame.cpp \
+    src/TransmitFrame.cpp \
+    src/FrameHandler.cpp \
+    src/QXbeeFrame.cpp
 
 HEADERS += \
-        include/qxbee.h \
-        include/qxbee_global.h \
-        include/xbeeTransmitPacket.h \
-        include/xbeeGenericPacket.h \
-        include/xbeeReceivePacket.h
+    include/FrameHandler.h \
+    include/QXbee.h \
+    include/ReceiveFrame.h \
+    include/QXbee_global.h \
+    include/TransmitFrame.h \
+    include/QXbeeFrame.h
 
 #unix {
 #    target.path = /usr/lib
