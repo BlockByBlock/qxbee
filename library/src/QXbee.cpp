@@ -1,12 +1,15 @@
-#include "../include/qxbee.h"
-#include "../include/xbeeGenericPacket.h"
+#include "../include/QXbee.h"
+#include "../include/FrameHandler.h"
+#include "../include/FrameBuffer.h"
+#include "../include/QXbeeFrame.h"
 
 namespace QXbee {
 
 struct QXbeePrivate
 {
-  QByteArray buffer;                  // For holding data pass into QXbee initially
-  XbeeGenericPacket genericPacket;    // For constructing a generic xbee frame
+  QXbeeFrame frame;
+  FrameHandler handler;
+  FrameBuffer buffer;
 };
 
 /*!
@@ -23,7 +26,6 @@ QXbee::QXbee(QObject *parent)
 QXbee::QXbee(const QByteArray &ba, QObject *parent)
   :QObject(parent), d(new QXbeePrivate)
 {
-  d->buffer = ba;
 }
 
 /*!
@@ -33,9 +35,20 @@ QXbee::QXbee(const QByteArray &ba, QObject *parent)
 QXbee::QXbee(const QString &string, QObject *parent)
   :QObject(parent), d(new QXbeePrivate)
 {
-  d->buffer = string.toLatin1();
 }
 
 QXbee::~QXbee(){}
+
+bool QXbee::consume(QByteArray data)
+{
+  //temp return
+  return true;
+}
+
+QByteArray QXbee::toByteArray()
+{
+  // temp return
+  return QByteArray();
+}
 
 }

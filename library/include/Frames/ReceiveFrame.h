@@ -3,7 +3,7 @@
 
 namespace QXbee {
 
-class QXbeeReceive
+class ReceiveFrame
 {};
 
 #endif //XBEE_RECEIVE_H

@@ -8,18 +8,18 @@ win32:CONFIG += static
 
 SOURCES += \
     src/QXbee.cpp \
-    src/ReceiveFrame.cpp \
-    src/TransmitFrame.cpp \
     src/FrameHandler.cpp \
-    src/QXbeeFrame.cpp
+    src/FrameBuffer.cpp \
+    src/QXbeeFrame.cpp \
+    src/QXbeeFrameData.cpp
 
 HEADERS += \
     include/FrameHandler.h \
+    include/FrameBuffer.h \
     include/QXbee.h \
-    include/ReceiveFrame.h \
     include/QXbee_global.h \
-    include/TransmitFrame.h \
-    include/QXbeeFrame.h
+    include/QXbeeFrame.h \
+    include/QXbeeFrameData.h
 
 #unix {
 #    target.path = /usr/lib

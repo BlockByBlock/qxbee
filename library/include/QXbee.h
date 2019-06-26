@@ -2,9 +2,11 @@
 #define QXBEE_H
 
 #include <QObject>
+#include <QSharedDataPointer>
 #include <QScopedPointer>
 #include <QString>
-#include "qxbee_global.h"
+#include "QXbee_global.h"
+#include "QXbeeFrameData.h"
 
 namespace QXbee {
 
@@ -25,7 +27,21 @@ public:
 
   ~QXbee();
 
+  /**
+   * @brief Process data into a frame
+   * @param Serial input/output from Xbee
+   * @return True if frame is completed
+   */
+  bool consume(QByteArray data);
+
+  /**
+   * @brief Convert frame to QByteArray
+   * @return Frame in QByteArray type
+   */
+  QByteArray toByteArray();
+
 private:
+  QSharedDataPointer<QXbeeFrameData> data;
   QScopedPointer<QXbeePrivate> d;
 
 };

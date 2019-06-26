@@ -3,7 +3,7 @@
 
 namespace QXbee {
 
-class QXbeeTransmit
+class TransmitFrame
 {};
 
 #endif //XBEE_TRANSMIT_H
