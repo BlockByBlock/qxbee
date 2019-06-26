@@ -19,7 +19,9 @@ HEADERS += \
     include/QXbee.h \
     include/QXbee_global.h \
     include/QXbeeFrame.h \
-    include/QXbeeFrameData.h
+    include/QXbeeFrameData.h \
+    include/Frames/TransmitFrame.h \
+    include/Frames/ReceiveFrame.h
 
 #unix {
 #    target.path = /usr/lib

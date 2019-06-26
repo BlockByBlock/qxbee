@@ -23,11 +23,10 @@ public:
   ~FrameHandler();
 
   /**
-   * @brief Get the type of frames handled by this handler
-   * @return The frame type handled by the handler
+   * @brief Process the data to set delimiter, frameLen, frameTypr
+   * @param raw input from serial i/o
+   * @param QXbeeFrameData type
    */
-  static QXbeeFrameData::ApiFrameType getType();
-
   static void processData(const QByteArray& input, QXbeeFrameData* data);
 };
 

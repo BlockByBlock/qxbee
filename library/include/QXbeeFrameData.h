@@ -36,29 +36,26 @@ public:
     ManyToOneRouteRequestIndicator  = 0xA3
   };
 
-  // Constructor
+  /** Constructor */
   QXbeeFrameData();
 
-  // Destructor
+  /** Destructor */
   ~QXbeeFrameData();
 
-  // Copy Constructor
+  /** Copy Constructor */
   QXbeeFrameData(const QXbeeFrameData &other);
 
-  // Index of start delimiter
+  /** Index of start delimiter */
   int                          indexDelimiter;
 
-  // Api frame type
-  QXbeeFrameData::ApiFrameType frameType;
+  /** Api frame type */
+  quint8                       frameType;
 
-  // Frame length
+  /** Frame length */
   quint16                      frameLen;
 
-  // Frame data
+  /** Frame data */
   QByteArray                   data;
-
-  // True if frame allocates data
-  bool                         allocData;
 };
 
 }

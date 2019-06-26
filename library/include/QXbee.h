@@ -32,6 +32,12 @@ public:
   bool consume(QByteArray data);
 
   /**
+   * @brief Check if frame is completed
+   * @return True if complete frame
+   */
+  bool isComplete();
+
+  /**
    * @brief Convert frame to QByteArray
    * @return Frame in QByteArray type
    */

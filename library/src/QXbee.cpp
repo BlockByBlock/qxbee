@@ -7,7 +7,7 @@ namespace QXbee {
 
 struct QXbeePrivate
 {
-  QXbeeFrame frame;
+  QXbeeFrame  frame;
   FrameBuffer buffer;
 };
 
@@ -39,10 +39,16 @@ QXbee::QXbee(const QString &string)
 
 QXbee::~QXbee(){}
 
-bool QXbee::consume(QByteArray)
+bool QXbee::consume(QByteArray data)
 {
-  //temp return
-  return true;
+  init(data);
+  bool result = isComplete();
+  return result;
+}
+
+bool QXbee::isComplete()
+{
+  return d->frame.isComplete();
 }
 
 QByteArray QXbee::toByteArray()
