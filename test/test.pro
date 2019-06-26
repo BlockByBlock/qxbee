@@ -8,10 +8,10 @@ TEMPLATE     = app
 
 SOURCES     += main.cpp \
                testqxbee.cpp \
-               ../library/src/qxbee.cpp
+               ../library/src/QXbee.cpp
 
 HEADERS     += testqxbee.h \
-               ../library/include/qxbee.h
+               ../library/include/QXbee.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../library/release/ -lqxbee
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../library/debug/ -lqxbee

@@ -14,16 +14,22 @@ struct FrameBufferPrivate;
  * \class The FrameBuffer class
  * \brief For storing frames
  */
-class FrameBuffer: public QXbee
+class FrameBuffer
 {
 public:
   /**
    * @brief FrameBuffer Constructor
    */
-  FrameBuffer(QObject *parent=Q_NULLPTR);
+  FrameBuffer();
 
   /** Destructor */
   ~FrameBuffer();
+
+  /**
+   * @brief Store as buffer for uses
+   * @param Data to be stored into the buffer
+   */
+  void store(const QByteArray data);
 
   /**
    * @brief Clear buffer and count dropped frame

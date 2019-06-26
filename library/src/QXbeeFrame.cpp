@@ -2,43 +2,34 @@
 
 namespace QXbee {
 
-QXbeeFrame::QXbeeFrame(QObject *parent)
-  :QXbee(parent), d(new QXbeeFrameData){}
+QXbeeFrame::QXbeeFrame(){}
 
 QXbeeFrame::~QXbeeFrame(){}
 
-QXbeeFrame::QXbeeFrame(const QXbeeFrame &other):d(other.d){}
-
 void QXbeeFrame::clear()
-{
-  d->frameLen = 0;
-  d->data.clear();
-}
+{}
 
-void QXbeeFrame::setFrameType(QXbeeFrameData::ApiFrameType type)
-{
-  d->frameType = type;
-}
+void QXbeeFrame::setFrameType(QXbeeFrameData::ApiFrameType)
+{}
 
 quint16 QXbeeFrame::getDataLen() const
 {
-  return d->frameLen;
+  return quint16();
 }
 
-void QXbeeFrame::setDataLen(quint16 len)
+void QXbeeFrame::setDataLen(quint16)
 {
-  d->frameLen = len;
 }
 
 void QXbeeFrame::processData(QByteArray data)
 {
   if(data.contains(EscapeByte::StartDelimiter))
   {
-
+    return;
   }
   else
   {
-
+    return;
   }
 }
 

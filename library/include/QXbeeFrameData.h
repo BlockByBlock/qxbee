@@ -45,17 +45,20 @@ public:
   // Copy Constructor
   QXbeeFrameData(const QXbeeFrameData &other);
 
+  // Index of start delimiter
+  int                          indexDelimiter;
+
   // Api frame type
   QXbeeFrameData::ApiFrameType frameType;
 
   // Frame length
-  quint16                  frameLen;
+  quint16                      frameLen;
 
   // Frame data
-  QByteArray               data;
+  QByteArray                   data;
 
   // True if frame allocates data
-  bool                     allocData;
+  bool                         allocData;
 };
 
 }

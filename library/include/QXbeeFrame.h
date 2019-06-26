@@ -12,7 +12,7 @@ namespace QXbee {
  * \class The QXbee Frame Types
  * \brief The generic data frame structure of xbee
  */
-class QXbeeFrame: public QXbee
+class QXbeeFrame
 {
 public:
   /** Bytes that need to be escaped*/
@@ -24,13 +24,10 @@ public:
   };
 
   /** Default constructor */
-  QXbeeFrame(QObject *parent=Q_NULLPTR);
+  QXbeeFrame();
 
   /** Destructor */
   ~QXbeeFrame();
-
-  /** Copy constructor - trivial */
-  QXbeeFrame(const QXbeeFrame &other);
 
   /** Clear this frame data */
   void clear();
@@ -61,9 +58,6 @@ protected:
    * @param Length of the frame
    */
   void processData(QByteArray data);
-
-private:
-  QSharedDataPointer<QXbeeFrameData> d;
 };
 
 }

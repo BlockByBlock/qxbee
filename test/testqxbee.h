@@ -20,6 +20,8 @@ private slots:
   void init(); //will be called before each test function is executed
   void cleanup(); //will be called after every test function
 
+  void test();
+
 private:
   QScopedPointer<TestQXbeePrivate> d;
 };

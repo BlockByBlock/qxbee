@@ -10,14 +10,14 @@ namespace QXbee {
  * \class The QXbeeFrameHandler class
  * \brief Process frame - to be inherited by specific frame handler
  */
-class FrameHandler: public QXbee
+class FrameHandler
 {
 public:
   /**
    * @brief FrameHandler Constructor
    * @param Api Frame Type
    */
-  FrameHandler(QObject *parent=Q_NULLPTR);
+  FrameHandler();
 
   /** Destructor */
   ~FrameHandler();
@@ -26,9 +26,9 @@ public:
    * @brief Get the type of frames handled by this handler
    * @return The frame type handled by the handler
    */
-  QXbeeFrameData::ApiFrameType getType() const;
+  static QXbeeFrameData::ApiFrameType getType();
 
-  void processData(const QXbeeFrameData::ApiFrameType frame);
+  static void processData(const QByteArray& input, QXbeeFrameData* data);
 };
 
 }

@@ -4,16 +4,22 @@ namespace QXbee {
 
 struct FrameBufferPrivate
 {
+  QByteArray              buffer;
   quint32                 droppedFrames;
 };
 
-FrameBuffer::FrameBuffer(QObject *parent)
-  :QXbee(parent), d(new FrameBufferPrivate)
+FrameBuffer::FrameBuffer()
+  :d(new FrameBufferPrivate)
 {
   d->droppedFrames = 0;
 }
 
 FrameBuffer::~FrameBuffer(){}
+
+void FrameBuffer::store(const QByteArray data)
+{
+  d->buffer.push_back(data);
+}
 
 void FrameBuffer::clear()
 {

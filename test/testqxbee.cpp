@@ -35,5 +35,10 @@ void TestQXbee::cleanupTestCase(){}
 
 void TestQXbee::init(){}
 
+void TestQXbee::test()
+{
+  d->qxbee = QXbee::QXbee(d->transmitPacket);
+}
+
 void TestQXbee::cleanup(){}
 }

@@ -8,38 +8,38 @@ namespace QXbee {
 struct QXbeePrivate
 {
   QXbeeFrame frame;
-  FrameHandler handler;
   FrameBuffer buffer;
 };
 
 /*!
  * \brief Constructor: Construct an empty QXbee object
  */
-QXbee::QXbee(QObject *parent)
-  :QObject(parent), d(new QXbeePrivate)
+QXbee::QXbee():d(new QXbeePrivate)
 {}
 
 /*!
  * \brief Constructor: Construct a QXbee object from QByteArray
  * \param QByteArray
  */
-QXbee::QXbee(const QByteArray &ba, QObject *parent)
-  :QObject(parent), d(new QXbeePrivate)
+QXbee::QXbee(const QByteArray &ba)
+  :d(new QXbeePrivate), d_frame(new QXbeeFrameData)
 {
+  init(ba);
 }
 
 /*!
  * \brief Constructor: Construct a QXbee object from QString
  * \param QString
  */
-QXbee::QXbee(const QString &string, QObject *parent)
-  :QObject(parent), d(new QXbeePrivate)
+QXbee::QXbee(const QString &string)
+  :d(new QXbeePrivate), d_frame(new QXbeeFrameData)
 {
+  init(string.toLatin1());
 }
 
 QXbee::~QXbee(){}
 
-bool QXbee::consume(QByteArray data)
+bool QXbee::consume(QByteArray)
 {
   //temp return
   return true;
@@ -49,6 +49,12 @@ QByteArray QXbee::toByteArray()
 {
   // temp return
   return QByteArray();
+}
+
+void QXbee::init(const QByteArray input)
+{
+  d->buffer.store(input);
+  FrameHandler::processData(input, d_frame.data());
 }
 
 }
