@@ -13,13 +13,19 @@ SOURCES += \
     src/QXbeeFrame.cpp \
     src/QXbeeFrameData.cpp
 
+SOURCES += \
+    src/Frames/TransmitFrame.cpp \
+    src/Frames/ReceiveFrame.cpp
+
 HEADERS += \
     include/FrameHandler.h \
     include/FrameBuffer.h \
     include/QXbee.h \
     include/QXbee_global.h \
     include/QXbeeFrame.h \
-    include/QXbeeFrameData.h \
+    include/QXbeeFrameData.h
+
+HEADERS += \
     include/Frames/TransmitFrame.h \
     include/Frames/ReceiveFrame.h
 

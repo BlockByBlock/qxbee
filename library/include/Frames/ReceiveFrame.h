@@ -6,19 +6,19 @@
 namespace QXbee {
 
 /**
- * \struct The ReceiveFrame class
+ * \class The ReceiveFrame class
  * \brief Frame type 0x90
  */
-struct ReceiveFrame
+class ReceiveFrame: public QXbeeFrameData
 {
-  QXbeeFrameData::ApiFrameType frameType;
+public:
   quint64                      destAdd64;
   quint16                      destAdd16;
   quint8                       option;
   QByteArray                   payload;
+  QXbeeFrameData::ApiFrameType frameType;
 
-  ReceiveFrame()
-    :frameType(QXbeeFrameData::ApiFrameType::ZigbeeReceivePacket){}
+  ReceiveFrame();
 };
 
 #endif //XBEE_RECEIVE_H

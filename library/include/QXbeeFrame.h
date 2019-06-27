@@ -45,17 +45,19 @@ public:
    */
   bool isComplete();
 
-  /**
-   * @brief Set Frame Type
-   * @param frameType from QXbeeFrameData
-   * @return True if valid frame type
-   */
-  bool setFrame(quint8 frameType);
-
   /** Clear frame data */
-  void clear();
+  void clearData();
+
+  /**
+   * @brief createFrameType
+   * @param type
+   * @return
+   */
+  static QXbeeFrameData* createFrameType(quint8 type);
 
 private:
+  int                            _indexDelimiter;
+  quint8                         _frameLen;
   QSharedPointer<QXbeeFrameData> d;
 };
 

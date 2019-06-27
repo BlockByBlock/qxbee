@@ -45,14 +45,8 @@ public:
   /** Copy Constructor */
   QXbeeFrameData(const QXbeeFrameData &other);
 
-  /** Index of start delimiter */
-  int                          indexDelimiter;
-
   /** Api frame type */
   quint8                       frameType;
-
-  /** Frame length */
-  quint16                      frameLen;
 
   /** Frame data */
   QByteArray                   data;

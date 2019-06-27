@@ -6,21 +6,21 @@
 namespace QXbee {
 
 /**
- * \struct The TransmitFrame class
+ * \class The TransmitFrame class
  * \brief Frame type 0x10
  */
-struct TransmitFrame
+class TransmitFrame: public QXbeeFrameData
 {
-  QXbeeFrameData::ApiFrameType frameType;
+public:
   quint8                       frameId;
   quint64                      destAdd64;
   quint16                      destAdd16;
   quint8                       broadcastRadius;
   quint8                       option;
   QByteArray                   payload;
+  QXbeeFrameData::ApiFrameType frameType;
 
-  TransmitFrame()
-    :frameType(QXbeeFrameData::ApiFrameType::ZigbeeTransmitRequest){}
+  TransmitFrame();
 };
 
 #endif //XBEE_TRANSMIT_H

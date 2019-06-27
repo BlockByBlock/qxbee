@@ -11,7 +11,21 @@ namespace QXbee {
 
 /*!
  * \class The QXbee class
- * \brief Currently supporting API operation
+ * \brief Construct/Process Xbee data to make it useful
+ *
+ *                    ----------QXbee-----------
+ *                    |           |             |
+ *             FrameHandler   QXbeeFrame    FrameBuffer
+ *               (static)     (factory)       (cache)
+ *                                |
+ *                     (specific)FrameData
+ *
+ * FrameHandler - manipulate frame externally
+ * QXbeeFrame - contains delimiter index, frame length
+ *            - manipulate data internally
+ * QXbeeFrameData - payload class which changes with frame type
+ * FrameBuffer - store data for future uses
+ *
  */
 class QXBEESHARED_EXPORT QXbee
 {

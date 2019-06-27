@@ -7,22 +7,34 @@ FrameHandler::FrameHandler(){}
 FrameHandler::~FrameHandler()
 {}
 
-void FrameHandler::processData(const QByteArray& input, QXbeeFrame* data)
+void FrameHandler::processInput(const QByteArray& input, QXbeeFrame* frame)
 {
   int accessLimit = input.length();
 
   // get index of start delimiter in input
   if( input.contains(QXbeeFrame::EscapeByte::StartDelimiter) )
-    data->setIndexDelimiter( input.indexOf(QXbeeFrame::EscapeByte::StartDelimiter) );
+    frame->setIndexDelimiter( input.indexOf(QXbeeFrame::EscapeByte::StartDelimiter) );
 
   // get frame length from input (in decimal)
-  if( accessLimit >= (data->indexDelimiter() + 2) )
-    data->setFrameLen( input.at( data->indexDelimiter() + 1 ) |  input.at( data->indexDelimiter() + 2 ) );
+  if( accessLimit >= (frame->indexDelimiter() + 2) )
+    frame->setFrameLen( input.at( frame->indexDelimiter() + 1 ) |  input.at( frame->indexDelimiter() + 2 ) );
 
   // get frame type from input (in decimal)
-  if ( accessLimit >= (data->indexDelimiter() + 3))
-    data->setFrameType( input.at( data->indexDelimiter() + 3) );
+  if ( accessLimit >= (frame->indexDelimiter() + 3))
+  {
+    quint8 type = input.at( frame->indexDelimiter() + 3);
+    if(type > 0)
+    {
+      frame->setFrameType(type);
+      constructFrame(frame);
+    }
+  }
 
+}
+
+void FrameHandler::constructFrame(QXbeeFrame* frame)
+{
+  QXbeeFrame::createFrameType( frame->frameType() );
 }
 
 }

@@ -60,7 +60,7 @@ QByteArray QXbee::toByteArray()
 
 void QXbee::init(const QByteArray input)
 {
-  FrameHandler::processData(input, frame.data());
+  FrameHandler::processInput(input, frame.data());
 }
 
 }

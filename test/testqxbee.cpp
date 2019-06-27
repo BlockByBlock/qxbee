@@ -1,5 +1,5 @@
 #include "testqxbee.h"
-#include <../library/include/QXbee.h>
+#include <include/QXbee.h>
 
 namespace testqxbee {
 

@@ -27,7 +27,13 @@ public:
    * @param raw input from serial i/o
    * @param QXbeeFrame pointer
    */
-  static void processData(const QByteArray& input, QXbeeFrame* data);
+  static void processInput(const QByteArray& input, QXbeeFrame* data);
+
+  /**
+   * @brief Construct frame
+   * @param Frame to be manipulated into desired frame type frame
+   */
+  static void constructFrame(QXbeeFrame* data);
 };
 
 }
