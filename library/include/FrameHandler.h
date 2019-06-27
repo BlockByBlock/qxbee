@@ -2,7 +2,7 @@
 #define QXBEE_FRAME_HANDLER_H
 
 #include "QXbee.h"
-#include "QXbeeFrameData.h"
+#include "QXbeeFrame.h"
 
 namespace QXbee {
 
@@ -25,9 +25,9 @@ public:
   /**
    * @brief Process the data to set delimiter, frameLen, frameTypr
    * @param raw input from serial i/o
-   * @param QXbeeFrameData type
+   * @param QXbeeFrame pointer
    */
-  static void processData(const QByteArray& input, QXbeeFrameData* data);
+  static void processData(const QByteArray& input, QXbeeFrame* data);
 };
 
 }

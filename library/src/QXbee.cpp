@@ -1,20 +1,14 @@
 #include "../include/QXbee.h"
 #include "../include/FrameHandler.h"
-#include "../include/FrameBuffer.h"
-#include "../include/QXbeeFrame.h"
 
 namespace QXbee {
-
-struct QXbeePrivate
-{
-  QXbeeFrame  frame;
-  FrameBuffer buffer;
-};
 
 /*!
  * \brief Constructor: Construct an empty QXbee object
  */
-QXbee::QXbee():d(new QXbeePrivate)
+QXbee::QXbee()
+  :frame(new QXbeeFrame),
+   buffer(new FrameBuffer)
 {}
 
 /*!
@@ -22,7 +16,8 @@ QXbee::QXbee():d(new QXbeePrivate)
  * \param QByteArray
  */
 QXbee::QXbee(const QByteArray &ba)
-  :d(new QXbeePrivate), d_frame(new QXbeeFrameData)
+  :frame(new QXbeeFrame),
+   buffer(new FrameBuffer)
 {
   init(ba);
 }
@@ -32,12 +27,18 @@ QXbee::QXbee(const QByteArray &ba)
  * \param QString
  */
 QXbee::QXbee(const QString &string)
-  :d(new QXbeePrivate), d_frame(new QXbeeFrameData)
+  :frame(new QXbeeFrame),
+   buffer(new FrameBuffer)
 {
   init(string.toLatin1());
 }
 
 QXbee::~QXbee(){}
+
+QXbee::QXbee(const QXbee &other)
+  :frame(other.frame),
+   buffer(other.buffer)
+{}
 
 bool QXbee::consume(QByteArray data)
 {
@@ -48,7 +49,7 @@ bool QXbee::consume(QByteArray data)
 
 bool QXbee::isComplete()
 {
-  return d->frame.isComplete();
+  return frame->isComplete();
 }
 
 QByteArray QXbee::toByteArray()
@@ -59,8 +60,7 @@ QByteArray QXbee::toByteArray()
 
 void QXbee::init(const QByteArray input)
 {
-  d->buffer.store(input);
-  FrameHandler::processData(input, d_frame.data());
+  FrameHandler::processData(input, frame.data());
 }
 
 }

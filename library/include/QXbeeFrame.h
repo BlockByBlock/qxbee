@@ -1,18 +1,17 @@
 #ifndef QXBEE_FRAME_H
 #define QXBEE_FRAME_H
 
-#include <QtGlobal>
-#include <QSharedDataPointer>
-#include "QXbee.h"
+#include <QSharedData>
+#include <QSharedPointer>
 #include "QXbeeFrameData.h"
 
 namespace QXbee {
 
 /**
- * \class The QXbee Frame Types
- * \brief The generic data frame structure of xbee
+ * \class The QXbee Frame Class
+ * \brief Hold all different frame data structure
  */
-class QXbeeFrame
+class QXbeeFrame: public QSharedData
 {
 public:
   /** Bytes that need to be escaped*/
@@ -29,35 +28,35 @@ public:
   /** Destructor */
   ~QXbeeFrame();
 
-  /** Clear this frame data */
-  void clear();
+  /** Copy constructor */
+  QXbeeFrame(const QXbeeFrame &other);
+
+  /** Getter and setter for QXbeeFrameData */
+  int       indexDelimiter();
+  void      setIndexDelimiter(int val);
+  quint16   frameLen();
+  void      setFrameLen(quint16 val);
+  quint8    frameType();
+  void      setFrameType(quint8 val);
+
+  /**
+   * @brief Check if frame is completed
+   * @return True if complete frame
+   */
+  bool isComplete();
 
   /**
    * @brief Set Frame Type
-   * @param Frame type
+   * @param frameType from QXbeeFrameData
+   * @return True if valid frame type
    */
-  void setFrameType(QXbeeFrameData::ApiFrameType type);
+  bool setFrame(quint8 frameType);
 
-  /**
-   * @brief Get Data Length
-   * @return Length of frame
-   */
-  quint16 getDataLen() const;
+  /** Clear frame data */
+  void clear();
 
-  /**
-   * @brief Set Data Length
-   * @param Length to be set to frame
-   */
-  void setDataLen(quint16 len);
-
-protected:
-  /**
-   * @brief Setup Frame
-   * @param Frame type
-   * @param QByteArray of frame
-   * @param Length of the frame
-   */
-  void processData(QByteArray data);
+private:
+  QSharedPointer<QXbeeFrameData> d;
 };
 
 }

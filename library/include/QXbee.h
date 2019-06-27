@@ -2,14 +2,12 @@
 #define QXBEE_H
 
 #include <QSharedDataPointer>
-#include <QSharedPointer>
 #include <QString>
 #include "QXbee_global.h"
-#include "QXbeeFrameData.h"
+#include "QXbeeFrame.h"
+#include "FrameBuffer.h"
 
 namespace QXbee {
-
-struct QXbeePrivate;
 
 /*!
  * \class The QXbee class
@@ -19,10 +17,26 @@ class QXBEESHARED_EXPORT QXbee
 {
 public:
 
+  /** Default Constructor */
   QXbee();
-  QXbee(const QByteArray&);
+
+  /**
+   * @brief Overloaded Constructor
+   * @param QByteArray input
+   */
+  QXbee(const QByteArray& ba);
+
+  /**
+   * @brief Overloaded Constructor
+   * @param QString input
+   */
   QXbee(const QString& string);
+
+  /** Destructor */
   ~QXbee();
+
+  /** Copy Constructor */
+  QXbee(const QXbee &other);
 
   /**
    * @brief Process data into a frame
@@ -47,8 +61,8 @@ protected:
   void init(const QByteArray input);
 
 private:
-  QSharedPointer<QXbeePrivate> d;
-  QSharedDataPointer<QXbeeFrameData> d_frame;
+  QSharedDataPointer<QXbeeFrame>  frame;
+  QSharedDataPointer<FrameBuffer> buffer;
 };
 
 }

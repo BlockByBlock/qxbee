@@ -1,20 +1,17 @@
 #ifndef QXBEE_FRAME_BUFFER_H
 #define QXBEE_FRAME_BUFFER_H
 
-#include <QScopedPointer>
-#include "QXbee.h"
+#include <QSharedData>
 
 #define MAX_BUFFER_SIZE = 255
 
 namespace QXbee {
 
-struct FrameBufferPrivate;
-
 /*!
  * \class The FrameBuffer class
  * \brief For storing frames
  */
-class FrameBuffer
+class FrameBuffer: public QSharedData
 {
 public:
   /**
@@ -43,7 +40,8 @@ public:
   quint32 droppedCounter();
 
 private:
-  QScopedPointer<FrameBufferPrivate> d;
+  QByteArray buffer;
+  quint32    droppedFrames;
 };
 
 }

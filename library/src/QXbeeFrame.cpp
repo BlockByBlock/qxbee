@@ -1,36 +1,35 @@
 #include "../include/QXbeeFrame.h"
+#include "../include/Frames/TransmitFrame.h"
+#include "../include/Frames/ReceiveFrame.h"
 
 namespace QXbee {
 
-QXbeeFrame::QXbeeFrame(){}
+QXbeeFrame::QXbeeFrame():d(new QXbeeFrameData){}
 
 QXbeeFrame::~QXbeeFrame(){}
 
-void QXbeeFrame::clear()
+QXbeeFrame::QXbeeFrame(const QXbeeFrame &other):
+  QSharedData(other),
+  d(other.d)
 {}
 
-void QXbeeFrame::setFrameType(QXbeeFrameData::ApiFrameType)
-{}
+int QXbeeFrame::indexDelimiter(){ return d->indexDelimiter; }
 
-quint16 QXbeeFrame::getDataLen() const
-{
-  return quint16();
-}
+void QXbeeFrame::setIndexDelimiter(int val){ d->indexDelimiter = val; }
 
-void QXbeeFrame::setDataLen(quint16)
-{
-}
+quint16 QXbeeFrame::frameLen(){ return d->frameLen; }
 
-void QXbeeFrame::processData(QByteArray data)
-{
-  if(data.contains(EscapeByte::StartDelimiter))
-  {
-    return;
-  }
-  else
-  {
-    return;
-  }
-}
+void QXbeeFrame::setFrameLen(quint16 val){ d->frameLen = val; }
+
+quint8 QXbeeFrame::frameType(){ return d->frameType; }
+
+void QXbeeFrame::setFrameType(quint8 val){ d->frameType = val; }
+
+bool QXbeeFrame::isComplete(){ return true; }
+
+//bool QXbeeFrame::setFrame(quint8 frameType)
+//{}
+
+void QXbeeFrame::clear(){}
 
 }
