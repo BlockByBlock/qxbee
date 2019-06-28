@@ -14,28 +14,40 @@ namespace QXbee {
 class FrameBuffer: public QSharedData
 {
 public:
-  /**
-   * @brief FrameBuffer Constructor
+  /*!
+   * \brief FrameBuffer Constructor
    */
   FrameBuffer();
 
-  /** Destructor */
+  /*! Destructor */
   ~FrameBuffer();
 
-  /**
-   * @brief Store as buffer for uses
-   * @param Data to be stored into the buffer
+  /*!
+   * \brief Store as buffer for uses
+   * \param Data to be stored into the buffer
    */
-  void store(const QByteArray data);
+  void store(const QByteArray& data);
 
-  /**
-   * @brief Clear buffer and count dropped frame
+  /*!
+   * \brief Get Buffer
+   * \return buffer
+   */
+  QByteArray getBuffer() const;
+
+  /*!
+   * \brief Clear buffer and count dropped frame
    */
   void clear();
 
-  /**
-   * @brief Keep track of dropped frames since last call
-   * @return number of dropped frames
+  /*!
+   * \brief isEmpty
+   * \return True if buffer is empty
+   */
+  bool isEmpty();
+
+  /*!
+   * \brief Keep track of dropped frames since last call
+   * \return number of dropped frames
    */
   quint32 droppedCounter();
 

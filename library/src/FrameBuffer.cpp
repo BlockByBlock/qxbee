@@ -10,14 +10,25 @@ FrameBuffer::FrameBuffer()
 
 FrameBuffer::~FrameBuffer(){}
 
-void FrameBuffer::store(const QByteArray data)
+void FrameBuffer::store(const QByteArray& data)
 {
   buffer.push_back(data);
 }
 
+QByteArray FrameBuffer::getBuffer() const
+{
+  return buffer;
+}
+
 void FrameBuffer::clear()
 {
+  buffer.clear();
   droppedFrames++;
+}
+
+bool FrameBuffer::isEmpty()
+{
+  return buffer.isEmpty();
 }
 
 quint32 FrameBuffer::droppedCounter()

@@ -5,7 +5,7 @@
 
 namespace QXbee {
 
-/**
+/*!
  * \class The TransmitFrame class
  * \brief Frame type 0x10
  */
@@ -21,6 +21,8 @@ public:
   QXbeeFrameData::ApiFrameType frameType;
 
   TransmitFrame();
+
+  void insertData(const QByteArray& data);
 };
 
 #endif //XBEE_TRANSMIT_H

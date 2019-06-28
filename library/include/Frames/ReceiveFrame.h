@@ -5,7 +5,7 @@
 
 namespace QXbee {
 
-/**
+/*!
  * \class The ReceiveFrame class
  * \brief Frame type 0x90
  */
@@ -19,6 +19,8 @@ public:
   QXbeeFrameData::ApiFrameType frameType;
 
   ReceiveFrame();
+
+  void insertData(const QByteArray& data);
 };
 
 #endif //XBEE_RECEIVE_H

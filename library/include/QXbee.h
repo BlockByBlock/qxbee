@@ -31,43 +31,74 @@ class QXBEESHARED_EXPORT QXbee
 {
 public:
 
-  /** Default Constructor */
+  /*! Default Constructor */
   QXbee();
 
   /**
-   * @brief Overloaded Constructor
-   * @param QByteArray input
+   * \brief Overloaded Constructor
+   * \param QByteArray input
    */
   QXbee(const QByteArray& ba);
 
-  /**
-   * @brief Overloaded Constructor
-   * @param QString input
+  /*!
+   * \brief Overloaded Constructor
+   * \param QString input
    */
   QXbee(const QString& string);
 
-  /** Destructor */
+  /*! Destructor */
   ~QXbee();
 
-  /** Copy Constructor */
-  QXbee(const QXbee &other);
+  /*!
+   * \brief Copy Constructor
+   *   e.g. QXbee one("input");
+   *        QXbee two(one);
+   * \param QXbee object
+  */
+  QXbee(const QXbee& other);
 
-  /**
-   * @brief Process data into a frame
-   * @param Serial input/output from Xbee
-   * @return True if frame is completed
+  /*!
+   * \brief Move Constructor
+   *   e.g. QXbee one, two;
+   *        one = std::move(two);
+   *  \note Other buffer gets appended to current buffer
+   *  \param QXbee Object
+   */
+  QXbee(QXbee&& other);
+
+  /*!
+   * \brief Copy Assignment Operator
+   *   e.g. QXbee one, two;
+   *        one = two;
+   * \note Other buffer gets appended to current buffer
+   * \param QXbee Object
+   * \return QXbee Object
+   */
+  QXbee& operator = (const QXbee &other);
+
+  /*!
+   * \brief Move Assignment Operator
+   * \param QXbee Object
+   * \return QXbee Object
+   */
+  QXbee& operator = (QXbee&& other);
+
+  /*!
+   * \brief Process data into a frame
+   * \param Serial input/output from Xbee
+   * \return True if frame is completed
    */
   bool consume(QByteArray data);
 
-  /**
+  /*!
    * @brief Check if frame is completed
    * @return True if complete frame
    */
   bool isComplete();
 
-  /**
-   * @brief Convert frame to QByteArray
-   * @return Frame in QByteArray type
+  /*!
+   * \brief Convert frame to QByteArray
+   * \return Frame in QByteArray type
    */
   QByteArray toByteArray();
 

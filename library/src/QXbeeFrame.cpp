@@ -19,21 +19,28 @@ QXbeeFrame::QXbeeFrame(const QXbeeFrame &other):
   d(other.d)
 {}
 
-int QXbeeFrame::indexDelimiter(){ return _indexDelimiter; }
+int QXbeeFrame::indexDelimiter() const { return _indexDelimiter; }
 
 void QXbeeFrame::setIndexDelimiter(int val){ _indexDelimiter = val; }
 
-quint16 QXbeeFrame::frameLen(){ return _frameLen; }
+quint16 QXbeeFrame::frameLen() const { return _frameLen; }
 
 void QXbeeFrame::setFrameLen(quint16 val){ _frameLen = val; }
 
-quint8 QXbeeFrame::frameType(){ return d->frameType; }
+quint8 QXbeeFrame::frameType() const { return d->frameType; }
 
 void QXbeeFrame::setFrameType(quint8 val){ d->frameType = val; }
 
-bool QXbeeFrame::isComplete(){ return true; }
+bool QXbeeFrame::completeFlag() const { return _completeFlag; }
 
-void QXbeeFrame::clearData(){}
+void QXbeeFrame::setCompleteFlag(bool val){ _completeFlag = val; }
+
+void QXbeeFrame::clearData()
+{
+  _indexDelimiter = 0;
+  _frameLen = 0;
+  _completeFlag = false;
+}
 
 QXbeeFrameData* QXbeeFrame::createFrameType(quint8 type)
 {

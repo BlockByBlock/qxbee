@@ -5,7 +5,7 @@ namespace QXbee {
 QXbeeFrameData::QXbeeFrameData()
   :
     frameType(ApiFrameType::NoApi),
-    data(Q_NULLPTR)
+    dataByteArray(Q_NULLPTR)
 {}
 
 QXbeeFrameData::~QXbeeFrameData(){}
@@ -13,7 +13,12 @@ QXbeeFrameData::~QXbeeFrameData(){}
 QXbeeFrameData::QXbeeFrameData(const QXbeeFrameData &other)
   : QSharedData(other),
     frameType(other.frameType),
-    data(other.data)
+    dataByteArray(other.dataByteArray)
 {}
+
+void QXbeeFrameData::sortData(const QByteArray &data)
+{
+  dataByteArray = data;
+}
 
 }

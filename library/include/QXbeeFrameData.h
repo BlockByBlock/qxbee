@@ -5,14 +5,14 @@
 
 namespace QXbee {
 
-/**
+/*!
  * \class The QXbee Frame Data
  * \brief Implicity shared data class
  */
 class QXbeeFrameData: public QSharedData
 {
 public:
-  /** List of frame types supported */
+  /*! List of frame types supported */
   enum ApiFrameType {
     NoApi                           = 0x00,
     AtCommand                       = 0x08,
@@ -36,20 +36,26 @@ public:
     ManyToOneRouteRequestIndicator  = 0xA3
   };
 
-  /** Constructor */
+  /*! Constructor */
   QXbeeFrameData();
 
-  /** Destructor */
-  ~QXbeeFrameData();
+  /*! Virtual Destructor */
+  virtual ~QXbeeFrameData();
 
-  /** Copy Constructor */
+  /*! Copy Constructor */
   QXbeeFrameData(const QXbeeFrameData &other);
 
-  /** Api frame type */
+  /*! Api frame type */
   quint8                       frameType;
 
-  /** Frame data */
-  QByteArray                   data;
+  /*! Frame data */
+  QByteArray                   dataByteArray;
+
+  /*!
+   * \brief Sort data into respective field in specific frame
+   * \param Data which does not include delimiter, frame length
+   */
+  virtual void sortData(const QByteArray& data);
 };
 
 }

@@ -10,6 +10,8 @@ struct TestQXbeePrivate {
   QByteArray transmitPacket;
   QByteArray transmitStatus;
   QByteArray receivePacket;
+  QByteArray firstHalfTx;
+  QByteArray secondHalfTx;
 };
 
 TestQXbee::TestQXbee(QObject *parent)
@@ -30,6 +32,8 @@ void TestQXbee::initTestCase()
   d->receivePacket =
       QByteArray::fromHex("7E0072900013A2004187F3E7D053017B226964223A223078303031633030346633373431353030613230333433333437222C226E616D65223A22222C2274696D65223A22313937302D30312D30315430323A32303A33355A222C22746F706963223A22696E666F222C2276616C7565223A2230227D1D");
 
+  d->firstHalfTx = QByteArray::fromHex("7E004D10");
+  d->secondHalfTx = QByteArray::fromHex("01000000000000FFFFFFFE00007B226964223A223078636261333231222C22746F706963223A226374726C222C226E616D65223A226C696768745F6C766C222C2276616C7565223A2230227DB7");
 }
 void TestQXbee::cleanupTestCase(){}
 
@@ -37,7 +41,16 @@ void TestQXbee::init(){}
 
 void TestQXbee::test()
 {
-  d->qxbee = QXbee::QXbee(d->transmitPacket);
+  // move assignment operator invoked
+  // @End buffer : ref (1)
+  // @End frame : ref (1)
+  //d->qxbee = QXbee::QXbee(d->transmitPacket);
+
+  // move assignment operator invoked
+  // @End buffer : ref (1)
+  // @End frame : ref (1)
+  d->qxbee = QXbee::QXbee(d->firstHalfTx);
+  d->qxbee = QXbee::QXbee(d->secondHalfTx);
 }
 
 void TestQXbee::cleanup(){}
