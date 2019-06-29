@@ -5,7 +5,8 @@
 #include <QString>
 #include "QXbee_global.h"
 #include "QXbeeFrame.h"
-#include "FrameBuffer.h"
+
+#define MAX_BUFFER_SIZE = 255
 
 namespace QXbee {
 
@@ -13,18 +14,16 @@ namespace QXbee {
  * \class The QXbee class
  * \brief Construct/Process Xbee data to make it useful
  *
- *                    ----------QXbee-----------
- *                    |           |             |
- *             FrameHandler   QXbeeFrame    FrameBuffer
- *               (static)     (factory)       (cache)
- *                                |
- *                     (specific)FrameData
+ *        QXbee
+ *          |
+ *       QXbeeFrame
+ *       (factory)
+ *          |
+ *  (specific)FrameData
  *
- * FrameHandler - manipulate frame externally
  * QXbeeFrame - contains delimiter index, frame length
  *            - manipulate data internally
  * QXbeeFrameData - payload class which changes with frame type
- * FrameBuffer - store data for future uses
  *
  */
 class QXBEESHARED_EXPORT QXbee
@@ -32,7 +31,7 @@ class QXBEESHARED_EXPORT QXbee
 public:
 
   /*! Default Constructor */
-  QXbee();
+  QXbee() = default;
 
   /**
    * \brief Overloaded Constructor
@@ -46,23 +45,27 @@ public:
    */
   QXbee(const QString& string);
 
-  /*! Destructor */
+  /*! Implicit Destructor */
   ~QXbee();
 
   /*!
    * \brief Copy Constructor
    *   e.g. QXbee one("input");
    *        QXbee two(one);
+   * \note Other frame is moved if not 0
+   * \note Other frame is moved if completed
+   * \note Other buffer gets appended to current buffer
    * \param QXbee object
   */
   QXbee(const QXbee& other);
 
   /*!
    * \brief Move Constructor
-   *   e.g. QXbee one, two;
-   *        one = std::move(two);
-   *  \note Other buffer gets appended to current buffer
-   *  \param QXbee Object
+   *   e.g. QXbee one(QXbee two);
+   * \note Other frame is moved if not 0
+   * \note Other frame is moved if completed
+   * \note Other buffer gets appended to current buffer
+   * \param QXbee Object
    */
   QXbee(QXbee&& other);
 
@@ -70,6 +73,8 @@ public:
    * \brief Copy Assignment Operator
    *   e.g. QXbee one, two;
    *        one = two;
+   * \note Other frame is moved if not 0
+   * \note Other frame is moved if completed
    * \note Other buffer gets appended to current buffer
    * \param QXbee Object
    * \return QXbee Object
@@ -78,6 +83,11 @@ public:
 
   /*!
    * \brief Move Assignment Operator
+   *   e.g. QXbee one;
+   *        one = rvalue;
+   * \note Other frame is moved if not 0
+   * \note Other frame is moved if completed
+   * \note Other buffer gets appended to current buffer
    * \param QXbee Object
    * \return QXbee Object
    */
@@ -102,12 +112,41 @@ public:
    */
   QByteArray toByteArray();
 
+  /**
+   * @brief Process the data to set delimiter, frameLen, frameTypr
+   * @param raw input from serial i/o
+   * @param QXbeeFrame pointer
+   */
+  void processInput(const QByteArray& input);
+
+  /*!
+   * \brief Store as buffer for uses
+   * \param Data to be stored into the buffer
+   */
+  void store(const QByteArray& data);
+
+  /*!
+   * \brief Get Buffer
+   * \return buffer
+   */
+  QByteArray getBuffer() const;
+
+  /*!
+   * \brief Clear buffer and count dropped frame
+   */
+  void clear();
+
+  /*!
+   * \brief isEmpty
+   * \return True if buffer is empty
+   */
+  bool isEmpty();
+
 protected:
   void init(const QByteArray input);
+  QXbee(QXbeeFrame& d_ptr);
+  QSharedDataPointer<QXbeeFrame> d_ptr;
 
-private:
-  QSharedDataPointer<QXbeeFrame>  frame;
-  QSharedDataPointer<FrameBuffer> buffer;
 };
 
 }
