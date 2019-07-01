@@ -1,7 +1,7 @@
 #ifndef XBEE_RECEIVE_H
 #define XBEE_RECEIVE_H
 
-#include "../QXbeeFrameData.h"
+#include "../Frame.h"
 
 namespace QXbee {
 

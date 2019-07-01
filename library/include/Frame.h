@@ -1,17 +1,21 @@
-#ifndef QXBEE_FRAME_DATA_H
-#define QXBEE_FRAME_DATA_H
+#ifndef QXBEE_FRAME_H
+#define QXBEE_FRAME_H
 
-#include <QSharedData>
+#include "QXbee.h"
+
+#define MAX_BUFFER_SIZE = 255
 
 namespace QXbee {
 
+struct FrameImplementation;
 /*!
- * \class The QXbee Frame Data
+ * \class The QXbee Frame
  * \brief Implicity shared data class
  */
-class QXbeeFrameData: public QSharedData
+class Frame : public QXbee
 {
 public:
+
   /*! List of frame types supported */
   enum ApiFrameType {
     NoApi                           = 0x00,
@@ -37,27 +41,25 @@ public:
   };
 
   /*! Constructor */
-  QXbeeFrameData();
+  Frame() = default;
 
   /*! Virtual Destructor */
-  virtual ~QXbeeFrameData();
+  virtual ~Frame();
 
   /*! Copy Constructor */
-  QXbeeFrameData(const QXbeeFrameData &other);
-
-  /*! Api frame type */
-  quint8                       frameType;
-
-  /*! Frame data */
-  QByteArray                   dataByteArray;
+  Frame(const Frame &other);
 
   /*!
    * \brief Sort data into respective field in specific frame
    * \param Data which does not include delimiter, frame length
    */
   virtual void sortData(const QByteArray& data);
+
+private:
+  QSharedDataPointer<FrameImplementation> d_ptr;
+
 };
 
 }
-#endif // QXBEE_FRAME_DATA_H
+#endif // QXBEE_FRAME_H
 

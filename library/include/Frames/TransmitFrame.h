@@ -1,7 +1,7 @@
 #ifndef XBEE_TRANSMIT_H
 #define XBEE_TRANSMIT_H
 
-#include "../QXbeeFrameData.h"
+#include "../Frame.h"
 
 namespace QXbee {
 

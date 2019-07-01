@@ -7,23 +7,22 @@ unix:CONFIG += static
 win32:CONFIG += static
 
 SOURCES += \
-    src/QXbee.cpp \
-    src/QXbeeFrame.cpp \
-    src/QXbeeFrameData.cpp
+    src/QXbee.cpp
+#    src/Frame.cpp
 
-SOURCES += \
-    src/Frames/TransmitFrame.cpp \
-    src/Frames/ReceiveFrame.cpp
+#SOURCES += \
+#    src/Frames/TransmitFrame.cpp \
+#    src/Frames/ReceiveFrame.cpp
 
 HEADERS += \
     include/QXbee.h \
     include/QXbee_global.h \
-    include/QXbeeFrame.h \
-    include/QXbeeFrameData.h
+    include/QXbeePrivate.h
+#    include/Frame.h
 
-HEADERS += \
-    include/Frames/TransmitFrame.h \
-    include/Frames/ReceiveFrame.h
+#HEADERS += \
+#    include/Frames/TransmitFrame.h \
+#    include/Frames/ReceiveFrame.h
 
 #unix {
 #    target.path = /usr/lib
