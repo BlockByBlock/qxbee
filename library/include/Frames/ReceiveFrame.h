@@ -1,26 +1,22 @@
 #ifndef XBEE_RECEIVE_H
 #define XBEE_RECEIVE_H
 
-#include "../Frame.h"
+#include "../FrameData.h"
 
 namespace QXbee {
 
 /*!
- * \class The ReceiveFrame class
+ * \struct The ReceiveFrame class
  * \brief Frame type 0x90
  */
-class ReceiveFrame: public QXbeeFrameData
+struct ReceiveFrame: public FrameData
 {
-public:
-  quint64                      destAdd64;
-  quint16                      destAdd16;
-  quint8                       option;
+  quint64                      destAdd64 {0};
+  quint16                      destAdd16 {0};
+  quint8                       option {0};
   QByteArray                   payload;
-  QXbeeFrameData::ApiFrameType frameType;
 
-  ReceiveFrame();
-
-  void insertData(const QByteArray& data);
+  ReceiveFrame():FrameData(ApiFrameType::ZigbeeReceivePacket){}
 };
 
 #endif //XBEE_RECEIVE_H

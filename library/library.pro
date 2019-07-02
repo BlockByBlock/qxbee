@@ -11,20 +11,15 @@ SOURCES += \
     src/QXbeePrivate.cpp \
     src/Frame.cpp
 
-#SOURCES += \
-#    src/Frames/TransmitFrame.cpp \
-#    src/Frames/ReceiveFrame.cpp
-
 HEADERS += \
     include/QXbee.h \
     include/QXbee_global.h \
     include/QXbeePrivate.h \
     include/Frame.h
-#    include/FrameImplementation.h
 
-#HEADERS += \
-#    include/Frames/TransmitFrame.h \
-#    include/Frames/ReceiveFrame.h
+HEADERS += \
+    include/Frames/TransmitFrame.h \
+    include/Frames/ReceiveFrame.h
 
 #unix {
 #    target.path = /usr/lib

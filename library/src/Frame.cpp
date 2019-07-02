@@ -1,8 +1,17 @@
 #include "../include/Frame.h"
+#include "../include/Frames/TransmitFrame.h"
+#include "../include/Frames/ReceiveFrame.h"
 
 namespace QXbee {
 
 Frame::Frame(const QByteArray& input)
+  :hasDelimiter(false),
+   isComplete(false),
+   indexDelimiter(0),
+   frameType(0),
+   frameLen(0),
+   checksum(0),
+   frameData(new FrameData(FrameData::NoApi))
 {
   populateFrame(input);
 }
@@ -33,7 +42,7 @@ void Frame::populateFrame(const QByteArray &input)
     if(type > 0)
     {
       frameType = type;
-      //d_ptr->createFrameType( d_ptr->frameType() );
+      frameData.reset( constructFrameType(type) );
     }
   }
 
@@ -46,6 +55,19 @@ void Frame::populateFrame(const QByteArray &input)
   else
   {
     isComplete = false;
+  }
+}
+
+FrameData* Frame::constructFrameType(quint8 type)
+{
+  switch(type)
+  {
+    case 16:
+      return new TransmitFrame;
+    case 144:
+      return new ReceiveFrame;
+    default:
+      return new FrameData(FrameData::NoApi);
   }
 }
 
