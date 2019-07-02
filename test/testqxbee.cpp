@@ -44,7 +44,7 @@ void TestQXbee::test()
   // move assignment operator invoked
   // @End buffer : ref (1)
   // @End frame : ref (1)
-  ///d->qxbee = QXbee::QXbee(d->transmitPacket);
+  //d->qxbee = QXbee::QXbee(d->transmitPacket);
 
   // move assignment operator invoked
   // @End buffer : ref (1)

@@ -7,8 +7,9 @@ unix:CONFIG += static
 win32:CONFIG += static
 
 SOURCES += \
-    src/QXbee.cpp
-#    src/Frame.cpp
+    src/QXbee.cpp \
+    src/QXbeePrivate.cpp \
+    src/Frame.cpp
 
 #SOURCES += \
 #    src/Frames/TransmitFrame.cpp \
@@ -17,8 +18,9 @@ SOURCES += \
 HEADERS += \
     include/QXbee.h \
     include/QXbee_global.h \
-    include/QXbeePrivate.h
-#    include/Frame.h
+    include/QXbeePrivate.h \
+    include/Frame.h
+#    include/FrameImplementation.h
 
 #HEADERS += \
 #    include/Frames/TransmitFrame.h \

@@ -12,16 +12,11 @@ namespace QXbee {
  * \class The QXbee class
  * \brief Construct/Process Xbee data to make it useful
  *
- * (Bridge design with Pimpl idiom)
- *
  *        QXbee - QXbeePrivate
- *          |
- *        Frame (Abstraction) - FrameImplementation
- *          |
- *          | (Inheritance)
- *          |
- *        RefinedFrame - ConcreteFrameImplementation
- *
+ *                  |     |
+ *        AbstractFrame  Buffer
+ *                  |
+ *         DerivedFrame
  */
 class QXBEESHARED_EXPORT QXbee
 {
@@ -42,29 +37,18 @@ public:
    */
   QXbee(const QString& string);
 
-  /*! Implicit Destructor */
+  /*! Destructor */
   ~QXbee();
 
   /*!
-   * \brief Copy Constructor
-   * \param QXbee object
+   * \brief Copy Constructor disabled
   */
-  QXbee(const QXbee& other);
+  QXbee(const QXbee& other) = delete;
 
   /*!
-   * \brief Move Constructor (for rvalue)
-   * \param QXbee Object
-   * \note
-   *    - isComplete is overwritten if true or other is true
-   *    - indexDelimiter is overwritten if true
-   *    - frameLen is overwritten if not zero
-   *    - frameType is overwritten if not zero
-   *    - buffer is combined and consume()
-   *    - buffer is clear if consume() return true
-   * \note use
-   *    e.g. QXbee one(QXbee(input));
+   * \brief Move Constructor disabled
    */
-  QXbee(QXbee&& other);
+  QXbee(QXbee&& other) = delete;
 
   /*!
    * \brief Copy Assignment Operator
@@ -74,27 +58,16 @@ public:
   QXbee& operator = (const QXbee &other);
 
   /*!
-   * \brief Move Assignment Operator (for rvalue)
-   * \param QXbee Object
-   * \return QXbee Object
-   * \note
-   *    - isComplete is overwritten if true or other is true
-   *    - indexDelimiter is overwritten if true
-   *    - frameLen is overwritten if not zero
-   *    - frameType is overwritten if not zero
-   *    - buffer is combined and consume()
-   *    - buffer is clear if consume() return true
-   * \note use
-   *    e.g. QXbee one = QXbee(input);
+   * \brief Move Assignment Operator
+   * \note See QXbeePrivate move assignment operator
    */
   QXbee& operator = (QXbee&& other);
 
   /*!
    * \brief Process data into a frame
    * \param Serial input/output from Xbee
-   * \return True if frame is completed
    */
-  bool consume(const QByteArray& data);
+  void init(const QByteArray& data);
 
   /*!
    * @brief Check if frame is completed
@@ -120,7 +93,6 @@ public:
   bool isEmpty();
 
 protected:
-  QXbee(QXbeePrivate& d_ptr);
   QSharedDataPointer<QXbeePrivate> d_ptr;
 
 };

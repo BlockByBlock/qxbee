@@ -1,20 +1,26 @@
 #ifndef QXBEE_FRAME_H
 #define QXBEE_FRAME_H
 
-#include "QXbee.h"
+#include <QSharedData>
 
 #define MAX_BUFFER_SIZE = 255
 
 namespace QXbee {
 
-struct FrameImplementation;
 /*!
  * \class The QXbee Frame
  * \brief Implicity shared data class
  */
-class Frame : public QXbee
+class Frame : public QSharedData
 {
 public:
+  /*! Bytes that need to be escaped*/
+  enum EscapeByte {
+    StartDelimiter = 0x7E,
+    Escape = 0x7D
+    //XON = 0x11,
+    //XOFF = 0x13
+  };
 
   /*! List of frame types supported */
   enum ApiFrameType {
@@ -39,25 +45,38 @@ public:
     RouteRecordIndicator            = 0xA1,
     ManyToOneRouteRequestIndicator  = 0xA3
   };
-
-  /*! Constructor */
+  /*! Default Constructor */
   Frame() = default;
 
+  /*! Explicit Constructor */
+  explicit Frame(const QByteArray& input);
+
   /*! Virtual Destructor */
-  virtual ~Frame();
+  virtual ~Frame() = default;
 
   /*! Copy Constructor */
   Frame(const Frame &other);
 
   /*!
-   * \brief Sort data into respective field in specific frame
-   * \param Data which does not include delimiter, frame length
+   * \brief Populate frame data structures with input
+   * \param Raw input from Xbee
    */
-  virtual void sortData(const QByteArray& data);
+  void populateFrame(const QByteArray& input);
+
+  /*!
+   * \brief Get frame complete status
+   * \return True if frame is completed
+   */
+  bool getComplete() const;
 
 private:
-  QSharedDataPointer<FrameImplementation> d_ptr;
 
+  bool          hasDelimiter;
+  bool          isComplete;
+  int           indexDelimiter;
+  quint8        frameType;
+  quint8        frameLen;
+  quint8        checksum;
 };
 
 }
