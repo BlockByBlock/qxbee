@@ -1,5 +1,5 @@
-#ifndef XBEE_TRANSMIT_H
-#define XBEE_TRANSMIT_H
+#ifndef XBEE_TRANSMIT_FRAME_H
+#define XBEE_TRANSMIT_FRAME_H
 
 #include "../Frame.h"
 
@@ -12,15 +12,16 @@ namespace QXbee {
 struct TransmitFrame: public FrameData
 {
 public:
-  quint8                       frameId {0};
-  quint64                      destAdd64 {0};
-  quint16                      destAdd16 {0};
-  quint8                       broadcastRadius {0};
-  quint8                       option {0};
-  QByteArray                   payload;
+  QByteArray                   frameId;
+  QByteArray                   destAdd64;
+  QByteArray                   destAdd16;
+  QByteArray                   broadcastRadius;
+  QByteArray                   option;
 
-  TransmitFrame():FrameData(ApiFrameType::ZigbeeTransmitRequest){}
+  TransmitFrame();
+
+  void sortFields(const QByteArray& data);
 };
 
-#endif //XBEE_TRANSMIT_H
+#endif //XBEE_TRANSMIT_FRAME_H
 }

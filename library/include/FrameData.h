@@ -1,9 +1,7 @@
 #ifndef QXBEE_FRAME_DATA_H
 #define QXBEE_FRAME_DATA_H
 
-#define MAX_BUFFER_SIZE = 255
-
-#include "Frame.h"
+#include <QByteArray>
 
 namespace QXbee {
 
@@ -37,14 +35,27 @@ struct FrameData
    ManyToOneRouteRequestIndicator  = 0xA3
  };
 
+ /*! Default Constructor */
+ FrameData() = default;
+
+ virtual ~FrameData() = default;
+
  /*!
   * \brief FrameData Constructor
   * \param ApiFrameType
   */
- FrameData(const FrameData::ApiFrameType type)
-  :apiFrameType(type){}
+ FrameData(const FrameData::ApiFrameType type);
+
+ /*!
+  * \brief Sort data into data fields
+  * \param Raw xbee input
+  * \note this method should only be accessed from populateFrame() in Frame class
+  *       for access safety
+  */
+ virtual void sortFields(const QByteArray& data) = 0;
 
  FrameData::ApiFrameType apiFrameType;
+ QByteArray              payload;
 };
 
 }

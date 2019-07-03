@@ -15,7 +15,7 @@ public:
   /*!
    * \brief QXbeePrivate Constructor
    */
-  QXbeePrivate() = default;
+  QXbeePrivate();
 
   /*!
    * \brief QXbeePrivate Copy Constructor

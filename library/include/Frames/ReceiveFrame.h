@@ -1,5 +1,5 @@
-#ifndef XBEE_RECEIVE_H
-#define XBEE_RECEIVE_H
+#ifndef XBEE_RECEIVE_FRAME_H
+#define XBEE_RECEIVE_FRAME_H
 
 #include "../FrameData.h"
 
@@ -11,13 +11,14 @@ namespace QXbee {
  */
 struct ReceiveFrame: public FrameData
 {
-  quint64                      destAdd64 {0};
-  quint16                      destAdd16 {0};
-  quint8                       option {0};
-  QByteArray                   payload;
+  QByteArray                   destAdd64;
+  QByteArray                   destAdd16;
+  QByteArray                   option;
 
-  ReceiveFrame():FrameData(ApiFrameType::ZigbeeReceivePacket){}
+  ReceiveFrame();
+
+  void sortFields(const QByteArray& data);
 };
 
-#endif //XBEE_RECEIVE_H
+#endif //XBEE_RECEIVE_FRAME_H
 }

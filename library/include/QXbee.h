@@ -76,10 +76,10 @@ public:
   bool isComplete();
 
   /*!
-   * \brief Convert frame to QByteArray
-   * \return Frame in QByteArray type
+   * \brief Extract payload from frame
+   * \return payload in QByteArray
    */
-  QByteArray toByteArray();
+  QByteArray payload();
 
   /*!
    * \brief Clear buffer and count dropped frame

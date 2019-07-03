@@ -20,6 +20,9 @@ QXbee& QXbee::operator = (QXbee&& other)
 {
   if(this != &other)
   {
+    if(d_ptr->frame->getComplete())
+      d_ptr->buffer.clear();
+
     d_ptr->buffer.push_back(other.d_ptr->buffer);
     d_ptr->frame = new Frame(d_ptr->buffer);
   }
@@ -38,14 +41,15 @@ void QXbee::init(const QByteArray& input)
 
 bool QXbee::isComplete()
 {
-  bool res = d_ptr->frame->getComplete();
-  return res;
+  return d_ptr->frame->getComplete();
 }
 
-QByteArray QXbee::toByteArray()
+QByteArray QXbee::payload()
 {
-  // temp return
-  return QByteArray();
+  if(isComplete() && d_ptr->frame)
+    return d_ptr->frame->extractPayload();
+  else
+    return QByteArray();
 }
 
 }
