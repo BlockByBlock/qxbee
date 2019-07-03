@@ -20,6 +20,9 @@ QXbee& QXbee::operator = (QXbee&& other)
 {
   if(this != &other)
   {
+    if(d_ptr->buffer.size() > 255)
+      d_ptr->buffer.clear();
+
     if(d_ptr->frame->getComplete())
       d_ptr->buffer.clear();
 
@@ -32,7 +35,9 @@ QXbee& QXbee::operator = (QXbee&& other)
 
 void QXbee::init(const QByteArray& input)
 {
-  // keep a copy as buffer
+  if(d_ptr->buffer.size() > 255)
+    d_ptr->buffer.clear();
+
   d_ptr->buffer.push_back(input);
 
   // sort input into frame data members

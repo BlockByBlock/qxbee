@@ -31,7 +31,7 @@ void Frame::populateFrame(const QByteArray &input)
 
     // get frame length from input (in decimal - quint8)
     if( accessLimit >= indexDelimiter + 2 )
-      frameLen = (input.at( indexDelimiter + 1 ) << 8) |  input.at( indexDelimiter + 2 );
+      frameLen = input.at( indexDelimiter + 2 );
 
 
     // get frame type from input (in decimal - quint8)

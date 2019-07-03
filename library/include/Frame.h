@@ -80,7 +80,7 @@ private:
   bool          isComplete {false};
   int           indexDelimiter {0};
   quint8        frameType {0};
-  quint16       frameLen {0};
+  quint8        frameLen {0};
   QByteArray    checksum;
 
   QScopedPointer<FrameData> frameData;
