@@ -2,8 +2,6 @@
 
 namespace QXbee {
 
-ReceiveFrame::ReceiveFrame():FrameData(ApiFrameType::ZigbeeReceivePacket){}
-
 void ReceiveFrame::sortFields(const QByteArray& data)
 {
   // Fixed Length allocation

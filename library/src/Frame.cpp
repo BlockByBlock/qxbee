@@ -7,7 +7,11 @@
 
 namespace QXbee {
 
-Frame::Frame(const QByteArray& input)
+Frame::Frame(){}
+
+Frame::~Frame(){}
+
+Frame::Frame(QByteArray& input)
 {
   populateFrame(input);
 }
@@ -16,7 +20,7 @@ Frame::Frame(const Frame& other)
   :QSharedData(other){}
 
 
-void Frame::populateFrame(const QByteArray &input)
+void Frame::populateFrame(QByteArray &input)
 {
   // only proceed if there is delimiter
   if( input.contains(EscapeByte::StartDelimiter) )
@@ -27,22 +31,22 @@ void Frame::populateFrame(const QByteArray &input)
 
 
     // move delimiter to index 0 (in new copy)
-    QByteArray data = input.right( input.size() - indexDelimiter );
+    input = input.right( input.size() - indexDelimiter );
 
     // to prevent accessing null index using QByteArray::at()
-    const int accessLimit = data.size();
+    const int accessLimit = input.size();
 
 
     // get frame length from input (in decimal - quint8)
     // NOTE: Frame length consist of 2 bytes, only 1 is used
     if( accessLimit >= 3 )
-      frameLen = data.at(2);
+      frameLen = input.at(2);
 
 
     // get frame type from input (in decimal - quint8)
     if( accessLimit >= 4 )
     {
-      const quint8 type = data.at(3);
+      const quint8 type = input.at(3);
       if(type > 0)
       {
         frameType = type;
@@ -56,15 +60,15 @@ void Frame::populateFrame(const QByteArray &input)
     if( accessLimit >= frameLen + 4 )
     {
       // checksum validation
-      data = data.mid(3, frameLen + 1);
-      if( validateChecksum(data) )
+      input = input.mid(3, frameLen + 1);
+      if( validateChecksum(input) )
       {
-        data.chop(1);  // remove checksum byte
+        input.chop(1);  // remove checksum byte
 
         // proceed is length is correctt and frameData is not null
-        if(data.length() == frameLen && frameData)
+        if(input.length() == frameLen && frameData)
         {
-          frameData->sortFields(data);
+          frameData->sortFields(input);
           isComplete = true;
         }
       }

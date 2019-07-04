@@ -18,15 +18,22 @@ public:
   QXbeePrivate();
 
   /*!
+   * \brief QXbeePrivate Destructor
+   */
+  ~QXbeePrivate() = default;
+
+  /*!
    * \brief QXbeePrivate Copy Constructor
    * \param other QXbeePrivate
    */
   QXbeePrivate(const QXbeePrivate &other);
 
   /*!
-   * \brief QXbeePrivate Destructor
+   * Default operation
    */
-  ~QXbeePrivate() = default;
+  QXbeePrivate& operator = (const QXbeePrivate &other) = default;
+  QXbeePrivate(QXbeePrivate&& other) = default;
+  QXbeePrivate& operator = (QXbeePrivate&& other) = default;
 
   QSharedDataPointer<Frame> frame;
   QByteArray                buffer;

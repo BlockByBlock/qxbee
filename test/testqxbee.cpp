@@ -41,7 +41,7 @@ void TestQXbee::test()
 {
   // Complete receive package
   // move assignment operator invoked
-  d->qxbee = QXbee::QXbee(d->receivePacket);
+  d->qxbee.consume(d->receivePacket);
 
 }
 

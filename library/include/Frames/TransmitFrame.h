@@ -18,8 +18,6 @@ public:
   QByteArray                   broadcastRadius;
   QByteArray                   option;
 
-  TransmitFrame();
-
   void sortFields(const QByteArray& data);
 };
 

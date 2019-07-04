@@ -23,22 +23,29 @@ public:
   };
 
   /*! Default Constructor */
-  Frame() = default;
+  Frame();
 
   /*! Explicit Constructor */
-  explicit Frame(const QByteArray& input);
+  explicit Frame(QByteArray& input);
 
-  /*! Virtual Destructor */
-  virtual ~Frame() = default;
+  /*! sDestructor */
+  ~Frame();
 
   /*! Copy Constructor */
   Frame(const Frame &other);
 
   /*!
+   * Default operation
+   */
+  Frame& operator = (const Frame &other) = default;
+  Frame(Frame&& other) = default;
+  Frame& operator = (Frame&& other) = default;
+
+  /*!
    * \brief Clean up inputt and populate data structures
    * \param Raw input from Xbee
    */
-  void populateFrame(const QByteArray& input);
+  void populateFrame(QByteArray& input);
 
   /*!
    * \brief Construct specific frame type
@@ -80,7 +87,6 @@ private:
   bool          isComplete {false};
   quint8        frameType {0};
   quint8        frameLen {0};
-  QByteArray    checksum;
 
   QScopedPointer<FrameData> frameData;
 };

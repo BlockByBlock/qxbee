@@ -9,8 +9,7 @@ win32:CONFIG += static
 SOURCES += \
     src/QXbee.cpp \
     src/QXbeePrivate.cpp \
-    src/Frame.cpp \
-    src/FrameData.cpp
+    src/Frame.cpp
 
 SOURCES += \
     src/Frames/TransmitFrame.cpp \

@@ -15,8 +15,6 @@ struct ReceiveFrame: public FrameData
   QByteArray                   destAdd16;
   QByteArray                   option;
 
-  ReceiveFrame();
-
   void sortFields(const QByteArray& data);
 };
 

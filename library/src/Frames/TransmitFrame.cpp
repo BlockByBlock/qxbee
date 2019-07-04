@@ -2,8 +2,6 @@
 
 namespace QXbee {
 
-TransmitFrame::TransmitFrame():FrameData(ApiFrameType::ZigbeeTransmitRequest){}
-
 void TransmitFrame::sortFields(const QByteArray &data)
 {
   // Fixed Length allocation

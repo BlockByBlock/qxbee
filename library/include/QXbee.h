@@ -22,7 +22,7 @@ class QXBEESHARED_EXPORT QXbee
 {
 public:
 
-  /*! Default Constructor */
+  /*! Constructor */
   QXbee();
 
   /**
@@ -32,42 +32,19 @@ public:
   QXbee(const QByteArray& ba);
 
   /*!
-   * \brief Overloaded Constructor
-   * \param QString input
+   * \brief Default
    */
-  QXbee(const QString& string);
-
-  /*! Destructor */
-  ~QXbee();
-
-  /*!
-   * \brief Copy Constructor disabled
-  */
-  QXbee(const QXbee& other) = delete;
-
-  /*!
-   * \brief Move Constructor disabled
-   */
-  QXbee(QXbee&& other) = delete;
-
-  /*!
-   * \brief Copy Assignment Operator
-   * \param QXbee Object
-   * \return QXbee Object
-   */
-  QXbee& operator = (const QXbee &other);
-
-  /*!
-   * \brief Move Assignment Operator
-   * \note See QXbeePrivate move assignment operator
-   */
-  QXbee& operator = (QXbee&& other);
+  ~QXbee() = default;
+  QXbee(const QXbee& other) = default;
+  QXbee& operator = (const QXbee &other) = default;
+  QXbee(QXbee&& other) = default;
+  QXbee& operator = (QXbee&& other) = default;
 
   /*!
    * \brief Process data into a frame
    * \param Serial input/output from Xbee
    */
-  void init(const QByteArray& data);
+  void consume(const QByteArray& data);
 
   /*!
    * @brief Check if frame is completed
@@ -92,7 +69,7 @@ public:
    */
   bool isEmpty();
 
-protected:
+private:
   QSharedDataPointer<QXbeePrivate> d_ptr;
 
 };

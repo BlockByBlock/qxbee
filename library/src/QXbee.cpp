@@ -4,48 +4,14 @@ namespace QXbee {
 
 QXbee::QXbee():d_ptr(new QXbeePrivate){}
 
-QXbee::QXbee(const QByteArray &ba):d_ptr(new QXbeePrivate){ init(ba); }
+QXbee::QXbee(const QByteArray &ba):d_ptr(new QXbeePrivate){ consume(ba); }
 
-QXbee::QXbee(const QString &string):d_ptr(new QXbeePrivate){ init(string.toLatin1()); }
-
-QXbee::~QXbee(){}
-
-QXbee& QXbee::operator = (const QXbee& other)
+void QXbee::consume(const QByteArray& input)
 {
-  d_ptr = other.d_ptr;  // This gracefully handles self assignment
-  return *this;
-}
-
-QXbee& QXbee::operator = (QXbee&& other)
-{
-  if(this != &other)
-  {
-    if(d_ptr->buffer.size() > 255)
-      d_ptr->buffer.clear();
-
-    if(other.d_ptr->buffer.size() > 255)
-      other.d_ptr->buffer.clear();
-
-    if(d_ptr->frame->getComplete())
-      d_ptr->buffer.clear();
-
-    d_ptr->buffer.push_back(other.d_ptr->buffer);
-
-    d_ptr->frame = new Frame(d_ptr->buffer);
-  }
-
-  return *this;
-}
-
-void QXbee::init(const QByteArray& input)
-{
-  if(d_ptr->buffer.size() > 255)
-    d_ptr->buffer.clear();
-
   d_ptr->buffer.push_back(input);
 
   // sort input into frame data members
-  d_ptr->frame = new Frame(input);
+  d_ptr->frame = new Frame(d_ptr->buffer);
 }
 
 bool QXbee::isComplete()

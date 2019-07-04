@@ -12,8 +12,6 @@ namespace QXbee {
 struct UnidentifiedFrame: public FrameData
 {
 public:
-  UnidentifiedFrame();
-
   void sortFields(const QByteArray& data);
 };
 
