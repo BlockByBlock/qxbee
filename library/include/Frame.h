@@ -9,7 +9,6 @@ namespace QXbee {
 
 /*!
  * \class The QXbee Frame
- * \brief Implicity shared data class
  */
 class Frame : public QSharedData
 {
@@ -23,13 +22,13 @@ public:
   };
 
   /*! Default Constructor */
-  Frame();
+  Frame() = default;
 
   /*! Explicit Constructor */
   explicit Frame(QByteArray& input);
 
-  /*! sDestructor */
-  ~Frame();
+  /*! Default Destructor */
+  ~Frame() = default;
 
   /*! Copy Constructor */
   Frame(const Frame &other);

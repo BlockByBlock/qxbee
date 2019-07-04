@@ -1,8 +1,7 @@
 #ifndef QXBEE_H
 #define QXBEE_H
 
-#include <QSharedData>
-#include <QSharedDataPointer>
+#include <QScopedPointer>
 #include "QXbee_global.h"
 #include "QXbeePrivate.h"
 
@@ -35,10 +34,6 @@ public:
    * \brief Default
    */
   ~QXbee() = default;
-  QXbee(const QXbee& other) = default;
-  QXbee& operator = (const QXbee &other) = default;
-  QXbee(QXbee&& other) = default;
-  QXbee& operator = (QXbee&& other) = default;
 
   /*!
    * \brief Process data into a frame
@@ -70,8 +65,8 @@ public:
   bool isEmpty();
 
 private:
-  QSharedDataPointer<QXbeePrivate> d_ptr;
-
+  QScopedPointer<QXbeePrivate> d_ptr;
+  Q_DISABLE_COPY(QXbee)
 };
 
 }

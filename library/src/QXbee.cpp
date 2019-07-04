@@ -11,7 +11,10 @@ void QXbee::consume(const QByteArray& input)
   d_ptr->buffer.push_back(input);
 
   // sort input into frame data members
-  d_ptr->frame = new Frame(d_ptr->buffer);
+  d_ptr->frame.reset( new Frame(d_ptr->buffer) );
+
+  if( isComplete() || d_ptr->buffer.size() > 255 )
+    d_ptr->buffer.clear();
 }
 
 bool QXbee::isComplete()

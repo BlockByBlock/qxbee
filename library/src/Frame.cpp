@@ -7,10 +7,6 @@
 
 namespace QXbee {
 
-Frame::Frame(){}
-
-Frame::~Frame(){}
-
 Frame::Frame(QByteArray& input)
 {
   populateFrame(input);
@@ -104,7 +100,10 @@ bool Frame::getComplete() const
 
 QByteArray Frame::extractPayload()
 {
-  return frameData->payload;
+  if(frameData)
+    return frameData->payload;
+  else
+    return QByteArray();
 }
 
 
