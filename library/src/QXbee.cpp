@@ -30,4 +30,12 @@ QByteArray QXbee::payload()
     return QByteArray();
 }
 
+QHash<QString, QByteArray> QXbee::hash()
+{
+  if(isComplete() && d_ptr->frame)
+    return d_ptr->frame->extractHash();
+  else
+    return QHash<QString, QByteArray>();
+}
+
 }

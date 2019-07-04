@@ -12,9 +12,6 @@ Frame::Frame(QByteArray& input)
   populateFrame(input);
 }
 
-Frame::Frame(const Frame& other)
-  :QSharedData(other){}
-
 
 void Frame::populateFrame(QByteArray &input)
 {
@@ -104,6 +101,15 @@ QByteArray Frame::extractPayload()
     return frameData->payload;
   else
     return QByteArray();
+}
+
+
+QHash<QString, QByteArray> Frame::extractHash()
+{
+  if(frameData)
+    return frameData->hash;
+  else
+    return QHash<QString, QByteArray>();
 }
 
 

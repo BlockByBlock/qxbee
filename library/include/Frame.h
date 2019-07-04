@@ -1,7 +1,7 @@
 #ifndef QXBEE_FRAME_H
 #define QXBEE_FRAME_H
 
-#include <QSharedData>
+#include <QHash>
 #include <QScopedPointer>
 #include "FrameData.h"
 
@@ -10,7 +10,7 @@ namespace QXbee {
 /*!
  * \class The QXbee Frame
  */
-class Frame : public QSharedData
+class Frame
 {
 public:
   /*! Bytes that need to be escaped*/
@@ -63,6 +63,12 @@ public:
    * \return payload
    */
   QByteArray extractPayload();
+
+  /*!
+   * \brief Extract hash from frameData
+   * \return payload hash
+   */
+  QHash<QString, QByteArray> extractHash();
 
 protected:
 

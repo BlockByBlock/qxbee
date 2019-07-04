@@ -1,6 +1,7 @@
 #ifndef QXBEE_H
 #define QXBEE_H
 
+#include <QHash>
 #include <QScopedPointer>
 #include "QXbee_global.h"
 #include "QXbeePrivate.h"
@@ -52,6 +53,12 @@ public:
    * \return payload in QByteArray
    */
   QByteArray payload();
+
+  /*!
+   * \brief Get hash
+   * \return hash
+   */
+  QHash<QString, QByteArray> hash();
 
   /*!
    * \brief Clear buffer and count dropped frame

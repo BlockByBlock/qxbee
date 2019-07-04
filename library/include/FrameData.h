@@ -2,6 +2,7 @@
 #define QXBEE_FRAME_DATA_H
 
 #include <QByteArray>
+#include <QHash>
 
 namespace QXbee {
 
@@ -21,7 +22,8 @@ struct FrameData
   */
   virtual void sortFields(const QByteArray& data) = 0;
 
-  QByteArray              payload;
+  QByteArray                 payload;
+  QHash<QString, QByteArray> hash;
 };
 
 }
