@@ -18,26 +18,31 @@ Frame::Frame(const Frame& other)
 
 void Frame::populateFrame(const QByteArray &input)
 {
-  // to prevent accessing null index using QByteArray::at()
-  const int accessLimit = input.length();
-
-  // get index of start delimiter in input (in int)
   // only proceed if there is delimiter
   if( input.contains(EscapeByte::StartDelimiter) )
   {
-    indexDelimiter = input.indexOf(EscapeByte::StartDelimiter);
+    // Will pick up the first delimiter even if there is multiple
+    int indexDelimiter = input.indexOf(EscapeByte::StartDelimiter);
     hasDelimiter = true;
 
 
+    // move delimiter to index 0 (in new copy)
+    QByteArray data = input.right( input.size() - indexDelimiter );
+
+    // to prevent accessing null index using QByteArray::at()
+    const int accessLimit = data.size();
+
+
     // get frame length from input (in decimal - quint8)
-    if( accessLimit >= indexDelimiter + 2 )
-      frameLen = input.at( indexDelimiter + 2 );
+    // NOTE: Frame length consist of 2 bytes, only 1 is used
+    if( accessLimit >= 3 )
+      frameLen = data.at(2);
 
 
     // get frame type from input (in decimal - quint8)
-    if( accessLimit >= indexDelimiter + 3 )
+    if( accessLimit >= 4 )
     {
-      const quint8 type = input.at( indexDelimiter + 3);
+      const quint8 type = data.at(3);
       if(type > 0)
       {
         frameType = type;
@@ -47,25 +52,22 @@ void Frame::populateFrame(const QByteArray &input)
 
 
     // get payload and load into framedata
-    // accessLimit is checked in this method
-    if( accessLimit >=  indexDelimiter + frameLen  )
+    // +4 for delimiter, framelen and checksum
+    if( accessLimit >= frameLen + 4 )
     {
-      QByteArray data = input.mid(indexDelimiter + 3, frameLen);
-      // proceed if frameData is not null
-      if(frameData)
-        frameData->sortFields(data);
-    }
+      // checksum validation
+      data = data.mid(3, frameLen + 1);
+      if( validateChecksum(data) )
+      {
+        data.chop(1);  // remove checksum byte
 
-
-    // Validate Checksum (if checksum is available)
-    // 2 is for frame length size
-    if( accessLimit >= (indexDelimiter + 3 + frameLen) )
-    {
-      // +1 for frameLen to include checksum within
-      const QByteArray validatorInput = input.mid(indexDelimiter + 3, frameLen + 1);
-
-      if( validateChecksum(validatorInput) )
-        isComplete = true;
+        // proceed is length is correctt and frameData is not null
+        if(data.length() == frameLen && frameData)
+        {
+          frameData->sortFields(data);
+          isComplete = true;
+        }
+      }
       else
         isComplete = false;
     }

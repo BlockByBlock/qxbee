@@ -35,7 +35,7 @@ public:
   Frame(const Frame &other);
 
   /*!
-   * \brief Populate frame data structures with input
+   * \brief Clean up inputt and populate data structures
    * \param Raw input from Xbee
    */
   void populateFrame(const QByteArray& input);
@@ -78,7 +78,6 @@ private:
 
   bool          hasDelimiter {false};
   bool          isComplete {false};
-  int           indexDelimiter {0};
   quint8        frameType {0};
   quint8        frameLen {0};
   QByteArray    checksum;

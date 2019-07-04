@@ -23,10 +23,14 @@ QXbee& QXbee::operator = (QXbee&& other)
     if(d_ptr->buffer.size() > 255)
       d_ptr->buffer.clear();
 
+    if(other.d_ptr->buffer.size() > 255)
+      other.d_ptr->buffer.clear();
+
     if(d_ptr->frame->getComplete())
       d_ptr->buffer.clear();
 
     d_ptr->buffer.push_back(other.d_ptr->buffer);
+
     d_ptr->frame = new Frame(d_ptr->buffer);
   }
 
