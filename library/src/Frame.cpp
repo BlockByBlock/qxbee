@@ -1,3 +1,4 @@
+#include <QMutexLocker>
 #include <limits.h>
 
 #include "../include/Frame.h"
@@ -15,6 +16,8 @@ Frame::Frame(QByteArray& input)
 
 void Frame::populateFrame(QByteArray &input)
 {
+  QMutexLocker locker(&mutex);
+
   // only proceed if there is delimiter
   if( input.contains(EscapeByte::StartDelimiter) )
   {
@@ -86,6 +89,35 @@ FrameData* Frame::constructFrameType(quint8 type)
     default:
       return new UnidentifiedFrame;
   }
+}
+
+
+QByteArray Frame::wrapPayload(const quint8 type, const QByteArray& data)
+{
+  QMutexLocker locker(&mutex);
+
+  QByteArray completeFrame;
+
+  completeFrame.push_back(data);
+  completeFrame.push_back( calculateChecksum(data) );
+  if(!validateChecksum(completeFrame))
+    return QByteArray();
+
+  // convert int length to quint8, and append 00 infront
+  completeFrame.push_front(QByteArray::fromHex( QByteArray::number(data.length(), 16) ));
+  frameLen = completeFrame.front();
+
+  completeFrame.push_front( QByteArray::fromHex("00") );
+  completeFrame.push_front( QByteArray::fromHex("7E") );
+
+  frameType = type;
+  hasDelimiter = true;
+  isComplete = true;
+
+  frameData.reset( constructFrameType(type) );
+  frameData->sortFields(completeFrame);
+
+  return completeFrame;
 }
 
 

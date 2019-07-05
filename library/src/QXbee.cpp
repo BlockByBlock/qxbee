@@ -17,6 +17,11 @@ void QXbee::consume(const QByteArray& input)
     d_ptr->buffer.clear();
 }
 
+QByteArray QXbee::produce(const quint8 type, const QByteArray& data)
+{
+  return d_ptr->frame->wrapPayload(type, data);
+}
+
 bool QXbee::isComplete()
 {
   return d_ptr->frame->getComplete();

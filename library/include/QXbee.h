@@ -43,6 +43,13 @@ public:
   void consume(const QByteArray& data);
 
   /*!
+   * \brief Create a Xbee frame from data
+   * \param payload
+   * \return Xbee frame w header and checksum
+   */
+  QByteArray produce(const quint8 type, const QByteArray& data);
+
+  /*!
    * @brief Check if frame is completed
    * @return True if complete frame
    */

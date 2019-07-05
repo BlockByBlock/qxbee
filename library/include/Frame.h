@@ -2,6 +2,7 @@
 #define QXBEE_FRAME_H
 
 #include <QHash>
+#include <QMutex>
 #include <QScopedPointer>
 #include "FrameData.h"
 
@@ -34,13 +35,6 @@ public:
   Frame(const Frame &other);
 
   /*!
-   * Default operation
-   */
-  Frame& operator = (const Frame &other) = default;
-  Frame(Frame&& other) = default;
-  Frame& operator = (Frame&& other) = default;
-
-  /*!
    * \brief Clean up inputt and populate data structures
    * \param Raw input from Xbee
    */
@@ -51,6 +45,13 @@ public:
    * \param Frame Type
    */
   FrameData* constructFrameType(quint8 type);
+
+  /*!
+   * \brief Wrap a payload w delimiter, length and checksum
+   * \param Data payload
+   * \return Complete Xbee frame with appropriate flag
+   */
+  QByteArray wrapPayload(const quint8 type, const QByteArray& data);
 
   /*!
    * \brief Get frame complete status
@@ -93,6 +94,7 @@ private:
   quint8        frameType {0};
   quint8        frameLen {0};
 
+  QMutex                    mutex;
   QScopedPointer<FrameData> frameData;
 };
 
