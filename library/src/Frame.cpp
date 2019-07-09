@@ -61,7 +61,7 @@ void Frame::populateFrame(QByteArray &input)
       {
         input.chop(1);  // remove checksum byte
 
-        // proceed is length is correctt and frameData is not null
+        // proceed if length is correct and frameData is not null
         if(input.length() == frameLen && frameData)
         {
           frameData->sortFields(input);
@@ -97,27 +97,33 @@ QByteArray Frame::wrapPayload(const quint8 type, const QByteArray& data)
   QMutexLocker locker(&mutex);
 
   QByteArray completeFrame;
-
   completeFrame.push_back(data);
-  completeFrame.push_back( calculateChecksum(data) );
-  if(!validateChecksum(completeFrame))
-    return QByteArray();
-
-  // convert int length to quint8, and append 00 infront
-  completeFrame.push_front(QByteArray::fromHex( QByteArray::number(data.length(), 16) ));
-  frameLen = completeFrame.front();
-
-  completeFrame.push_front( QByteArray::fromHex("00") );
-  completeFrame.push_front( QByteArray::fromHex("7E") );
 
   frameType = type;
-  hasDelimiter = true;
-  isComplete = true;
+  completeFrame.push_front(type);
+
+  // convert int length to quint8, and append 00 infront
+  QByteArray len = QByteArray::fromHex( QByteArray::number(completeFrame.length(), 16) );
 
   frameData.reset( constructFrameType(type) );
   frameData->sortFields(completeFrame);
 
-  return completeFrame;
+  completeFrame.push_back( calculateChecksum(completeFrame) );
+
+  if(validateChecksum(completeFrame))
+  {
+    completeFrame.push_front(len);
+    frameLen = completeFrame.front();
+    completeFrame.push_front( QByteArray::fromHex("00") );
+
+    completeFrame.push_front( QByteArray::fromHex("7E") );
+    hasDelimiter = true;
+
+    isComplete = true;
+    return completeFrame;
+  }
+  else
+    return QByteArray();
 }
 
 

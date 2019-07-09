@@ -47,9 +47,9 @@ public:
   FrameData* constructFrameType(quint8 type);
 
   /*!
-   * \brief Wrap a payload w delimiter, length and checksum
-   * \param Data payload
-   * \return Complete Xbee frame with appropriate flag
+   * \brief Wrap a payload w delimiter, length , type and checksum
+   * \param Data payload without data type, header or checksum
+   * \return Complete Xbee frame
    */
   QByteArray wrapPayload(const quint8 type, const QByteArray& data);
 

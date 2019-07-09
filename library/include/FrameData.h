@@ -16,7 +16,7 @@ struct FrameData
 
  /*!
   * \brief Sort data into data fields
-  * \param Raw xbee input
+  * \param Xbee frame without delimiter, frame length, and checksum
   * \note this method should only be accessed from populateFrame() in Frame class
   *       for access safety
   */

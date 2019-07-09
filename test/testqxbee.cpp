@@ -46,6 +46,8 @@ void TestQXbee::test()
   d->qxbee.consume(d->receivePacket);
 
   // produce transmit package
+  d->packetToProduce =
+      QByteArray::fromHex("01000000000000FFFFFFFE00007B202020226964223A2270795A5468586F34314B222C0A2020202022746F706963223A226374726C222C0A20202020226E616D65223A226C696768745F6C766C222C0A202020202276616C7565223A2230220A7D");
   QByteArray completeFrame = d->qxbee.produce(16, d->packetToProduce);
   d->qxbee.consume(completeFrame);
 }
